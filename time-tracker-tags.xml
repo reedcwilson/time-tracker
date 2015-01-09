@@ -11,6 +11,12 @@
 
       function eventCallback(response) {
         document.getElementById('content_div').innerHTML = response;
+        console.log("keys");
+        for (key in response[0].events[0])
+        {
+            console.log(key);
+        }
+        console.log("done");
         console.log("response.length " + response.length);
         console.log("response.name " + response[0].name);
         console.log("response.error " + response[0].error);
