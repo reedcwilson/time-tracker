@@ -1,40 +1,58 @@
 <Module>
-  <ModulePrefs title="getPreferences Test" height="40" author="Google" author_email="calendar-gadget-questions@google.com">
-    <Require feature="google.calendar-0.5"/>
+  <ModulePrefs title="getEvents Test" height="100" author="Google" author_email="calendar-gadget-questions@google.com">
+    <Optional feature="google.calendar-0.5.read"/>
   </ModulePrefs>
   <Content type="html">
-    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
     <html>
       <body>
-
         <script>
-          function preferenceCallback(prefs) {
 
-          // This is the timezone offset for this computer
-          var timezone_offset = prefs['timezone_offset'];
+          function run() {
+          var startDate = {year: 2009, month: 6, date : 1,
+          hour : 0, minute: 0, second: 0};
+          var endDate = {year: 2009, month: 7, date : 15,
+          hour : 0, minute: 0, second: 0};
 
-          // The calendar container tries to determine if the computer's clock is
-          // incorrect. And will tell us by how much.
-          var current_time_offset = prefs['current_time_offset'];
+          var calendars = ['en.usa#holiday@group.v.calendar.google.com',
+          'en.canadian#holiday@group.v.calendar.google.com'];
 
-          // The calendar container has a helper function to get the current time
-          // which MATCHES the time that the container uses.
-          var now = google.calendar.utils.getNow(current_time_offset);
+          google.calendar.read.getEvents(eventCallback, calendars, startDate, endDate);
+          }
 
-          var out = 'Timezone Offset in milliseconds = ' + timezone_offset +
-          '\nCalendar container thinks this computer\'s clock is off by = ' + current_time_offset + ' milliseconds\n' +
-          'Current time = ' + now;
+          function eventCallback(response) {
+          var out = '';
+          for (var i = 0; i < response.length; ++i) {
+          if ('error' in response[i]) {
+          out += 'Can\'t load calendar for ' + response[i].email + '\n';
+          continue;
+          }
+
+          out += 'CALENDAR: ' + response[i].email + '\n';
+          if ('name' in response[i]) {
+          out += 'NAME: ' + response[i].name + '\n';
+          }
+
+          var events = response[i]['events'];
+          for(var j = 0; j < events.length; ++j) {
+          var e = events[j];
+          if ('title' in e) {
+          out += 'Title = ' + e.title + '\n';
+          }
+          if ('location' in e) {
+          out += 'Location = ' + e.location + '\n';
+          }
+          out += '---------\n';
+          }
+          }
           alert(out);
           }
 
-          // The gadget containers request that we do NOT run any JS inline.
-          // Instead, register a callback handler.
-          gadgets.util.registerOnLoadHandler(function() {
-          google.calendar.getPreferences(preferenceCallback);
-          });
         </script>
 
-        Loading Preferences
+        <button onclick="run()">Get US and<br>Canadian holidays</button>
+
       </body>
     </html>
   </Content>
