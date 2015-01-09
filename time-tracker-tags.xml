@@ -22,8 +22,8 @@
       }
 
       function test() {
-        var startDate = {year: 2012, month: 12, date : 24, hour : 0, minute:0, second: 0};
-        var endDate = {year: 2013, month: 1, date : 1, hour : 0, minute: 0, second: 0};
+        var startDate = {year: 2015, month: 1, date : 9, hour : 0, minute:0, second: 0};
+        var endDate = {year: 2015, month: 1, date : 10, hour : 0, minute: 0, second: 0};
 
         google.calendar.read.getEvents(eventCallback, ["reedcwilson@gmail.com"], startDate, endDate);
       }
