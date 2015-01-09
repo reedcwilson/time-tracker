@@ -22,7 +22,7 @@
 
           function eventCallback(response) {
           var out = '';
-          for (var i = 0; i < response.length; ++i) {
+          for (var i = 0; i &lt; response.length; ++i) {
           if ('error' in response[i]) {
           out += 'Can\'t load calendar for ' + response[i].email + '\n';
           continue;
@@ -34,7 +34,7 @@
           }
 
           var events = response[i]['events'];
-          for(var j = 0; j < events.length; ++j) {
+          for(var j = 0; j &lt; events.length; ++j) {
           var e = events[j];
           if ('title' in e) {
           out += 'Title = ' + e.title + '\n';
