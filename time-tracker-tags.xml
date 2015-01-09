@@ -13,8 +13,12 @@
         document.getElementById('content_div').innerHTML = response;
         console.log("response.length " + response.length);
         console.log("response.name " + response[0].name);
+        console.log("response.error " + response[0].error);
         console.log("response.events.length " + response[0].events.length);
         console.log("response.events[0].title " + response.events[0].title);
+        console.log("response.events[0].allDay " + response.events[0].allDay);
+        console.log("response.events[0].id " + response.events[0].id);
+        console.log("response.events[0].details " + response.events[0].details);
       }
 
       function test() {
