@@ -25,7 +25,7 @@
 
       <FORM NAME="myform" ACTION="" METHOD="GET">Message: <BR>
         <INPUT TYPE="text" NAME="inputbox" VALUE=""><P>
-        <INPUT TYPE="button" NAME="button" Value="Transform" onClick="decodeMessage(this.form)">
+        <INPUT TYPE="button" NAME="button" Value="Transform" onClick="test()">
       </FORM>
       <div id="content_div"></div>
     </html>
