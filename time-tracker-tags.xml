@@ -11,7 +11,10 @@
 
       function eventCallback(response) {
         document.getElementById('content_div').innerHTML = response;
-        console.log(response[0].name);
+        console.log("response.length " + response.length);
+        console.log("response.name " + response[0].name);
+        console.log("response.events.length " + response[0].events.length);
+        console.log("response.events[0].title " + response.events[0].title);
       }
 
       function test() {
