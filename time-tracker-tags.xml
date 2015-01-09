@@ -20,6 +20,7 @@
         var endDate = {year: 2013, month: 1, date : 1, hour : 0, minute: 0, second: 0};
 
         google.calendar.read.getEvents(eventCallback, ["reedcwilson@gmail.com"], startDate, endDate);
+        google.calendar.read.showDate(2014, 12, 25);
       }
 
       </script>
