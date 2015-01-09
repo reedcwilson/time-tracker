@@ -5,43 +5,31 @@
     <Require feature="google.calendar-0.5.read"/>
   </ModulePrefs>
   <Content type="html">
-  <![CDATA[
-  <html>
-    <script type="text/javascript">
+    <![CDATA[
+      <html>
+        <script type="text/javascript">
+          window.addEventListener("DOMContentLoaded", function() {
+            doWork();
+          }, false);
 
-      function eventCallback(response) {
-        document.getElementById('content_div').innerHTML = response;
-        console.log("keys");
-        for (key in response[0].events[0])
-        {
-            console.log(key);
-        }
-        console.log("done");
-        console.log("response.length " + response.length);
-        console.log("response.name " + response[0].name);
-        console.log("response.error " + response[0].error);
-        console.log("response.events.length " + response[0].events.length);
-        console.log("response.events[0].title " + response[0].events[0].title);
-        console.log("response.events[0].allDay " + response[0].events[0].allDay);
-        console.log("response.events[0].id " + response[0].events[0].id);
-        console.log("response.events[0].details " + response[0].events[0].details);
-      }
+          function eventCallback(response) {
+            document.getElementById('content_div').innerHTML = response;
+          }
 
-      function test() {
-        var startDate = {year: 2015, month: 1, date : 9, hour : 0, minute:0, second: 0};
-        var endDate = {year: 2015, month: 1, date : 10, hour : 0, minute: 0, second: 0};
+          function doWork() {
+            var startDate = {year: 2015, month: 1, date : 9, hour : 0, minute:0, second: 0};
+            var endDate = {year: 2015, month: 1, date : 10, hour : 0, minute: 0, second: 0};
 
-        google.calendar.read.getEvents(eventCallback, ["reedcwilson@gmail.com"], startDate, endDate, {'requestedFields': ['owner', 'status', 'attendeeCount', 'details']});
-      }
+            google.calendar.read.getEvents(eventCallback, ["reedcwilson@gmail.com"], startDate, endDate, {'requestedFields': ['owner', 'status', 'attendeeCount', 'details']});
+          }
 
-      </script>
+        </script>
 
-      <FORM NAME="myform" ACTION="" METHOD="GET">Message: <BR>
-        <INPUT TYPE="text" NAME="inputbox" VALUE=""><P>
-        <INPUT TYPE="button" NAME="button" Value="Transform" onClick="test()">
-      </FORM>
-      <div id="content_div"></div>
-    </html>
+        <FORM NAME="myform" ACTION="" METHOD="GET">Message: <BR>
+          <INPUT TYPE="button" NAME="button" Value="Transform" onClick="doWork()">
+        </FORM>
+        <div id="content_div"></div>
+      </html>
     ]]>
   </Content>
 </Module>
