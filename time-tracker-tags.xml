@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Module>
-  <ModulePrefs title="Time Tracker">
-    <Require feature="google.calendar-0.5.read" />
+  <ModulePrefs title="Time Tracker" author="Reed Wilson">
+    <Require feature="google.calendar-0.5.read"/>
   </ModulePrefs>
   <Content type="html">
   <![CDATA[
