@@ -1,57 +1,388 @@
-<Module>
-  <ModulePrefs title="getEvents Test" height="100" author="Google" author_email="calendar-gadget-questions@google.com">
-    <Optional feature="google.calendar-0.5.read"/>
-  </ModulePrefs>
-  <Content type="html">
-    <html>
-      <body>
-        <script>
+<Module><ModulePrefs title="__MSG_Labs_Gadget_Where_Is_Title__" height="160" scrolling="false" description="__MSG_Labs_Gadget_Where_Is_Description_Short__" author="Google" author_email="calendar-gadget-questions@google.com" author_affiliation="Google Inc." thumbnail="/ig/modules/calendar/whereis/whereis-thm.png"><Require feature="setprefs"/><Require feature="dynamic-height"/><Require feature="google.calendar-0.5"/><Require feature="google.calendar-0.5.read"/><Locale messages="whereis/messages__en.xml"/><Locale messages="whereis/messages__ar.xml" lang="ar"/><Locale messages="whereis/messages__bg.xml" lang="bg"/><Locale messages="whereis/messages__ca.xml" lang="ca"/><Locale messages="whereis/messages__cs.xml" lang="cs"/><Locale messages="whereis/messages__da.xml" lang="da"/><Locale messages="whereis/messages__de.xml" lang="de"/><Locale messages="whereis/messages__el.xml" lang="el"/><Locale messages="whereis/messages__en.xml" lang="en"/><Locale messages="whereis/messages__en_GB.xml" lang="en-gb"/><Locale messages="whereis/messages__es.xml" lang="es"/><Locale messages="whereis/messages__fi.xml" lang="fi"/><Locale messages="whereis/messages__fr.xml" lang="fr"/><Locale messages="whereis/messages__hi.xml" lang="hi"/><Locale messages="whereis/messages__hr.xml" lang="hr"/><Locale messages="whereis/messages__hu.xml" lang="hu"/><Locale messages="whereis/messages__in.xml" lang="in"/><Locale messages="whereis/messages__it.xml" lang="it"/><Locale messages="whereis/messages__iw.xml" lang="iw"/><Locale messages="whereis/messages__ja.xml" lang="ja"/><Locale messages="whereis/messages__ko.xml" lang="ko"/><Locale messages="whereis/messages__lt.xml" lang="lt"/><Locale messages="whereis/messages__lv.xml" lang="lv"/><Locale messages="whereis/messages__nl.xml" lang="nl"/><Locale messages="whereis/messages__no.xml" lang="no"/><Locale messages="whereis/messages__pl.xml" lang="pl"/><Locale messages="whereis/messages__pt_BR.xml" lang="pt-br"/><Locale messages="whereis/messages__pt_PT.xml" lang="pt-pt"/><Locale messages="whereis/messages__ro.xml" lang="ro"/><Locale messages="whereis/messages__ru.xml" lang="ru"/><Locale messages="whereis/messages__sk.xml" lang="sk"/><Locale messages="whereis/messages__sl.xml" lang="sl"/><Locale messages="whereis/messages__sr.xml" lang="sr"/><Locale messages="whereis/messages__sv.xml" lang="sv"/><Locale messages="whereis/messages__th.xml" lang="th"/><Locale messages="whereis/messages__tl.xml" lang="tl"/><Locale messages="whereis/messages__tr.xml" lang="tr"/><Locale messages="whereis/messages__uk.xml" lang="uk"/><Locale messages="whereis/messages__vi.xml" lang="vi"/><Locale messages="whereis/messages__zh_CN.xml" lang="zh-cn"/><Locale messages="whereis/messages__zh_TW.xml" lang="zh-tw"/></ModulePrefs><UserPref name="users" datatype="hidden" default=""/><Content>
 
-          function run() {
-          var startDate = {year: 2009, month: 6, date : 1,
-          hour : 0, minute: 0, second: 0};
-          var endDate = {year: 2009, month: 7, date : 15,
-          hour : 0, minute: 0, second: 0};
+<html>
+<head>
+<style>
 
-          var calendars = ['en.usa#holiday@group.v.calendar.google.com',
-          'en.canadian#holiday@group.v.calendar.google.com'];
+body, form {
+  margin: 0;
+  padding: 0;
+  line-height: 1.1em;
+}
 
-          google.calendar.read.getEvents(eventCallback, calendars, startDate, endDate);
-          }
+body, input, td {
+  font-family: Arial, sans-serif;
+}
 
-          function eventCallback(response) {
-          var out = '';
-          for (var i = 0; i < response.length; ++i) {
-          if ('error' in response[i]) {
-          out += 'Can\'t load calendar for ' + response[i].email + '\n';
-          continue;
-          }
+#uid {
+  width: 130px;
+}
 
-          out += 'CALENDAR: ' + response[i].email + '\n';
-          if ('name' in response[i]) {
-          out += 'NAME: ' + response[i].name + '\n';
-          }
+#form, #openform, .name, .location  {
+  padding-left: 5px;
+}
 
-          var events = response[i]['events'];
-          for(var j = 0; j < events.length; ++j) {
-          var e = events[j];
-          if ('title' in e) {
-          out += 'Title = ' + e.title + '\n';
-          }
-          if ('location' in e) {
-          out += 'Location = ' + e.location + '\n';
-          }
-          out += '---------\n';
-          }
-          }
-          alert(out);
-          }
+#form {
+  margin: 5px 0;
+}
 
-        </script>
+#openform {
+  font-size: 71%;
+  margin-bottom: 4px;
+  margin-top: 2px;
+}
 
-        <button onclick="run()">Get US and<br>Canadian holidays</button>
+#gadget {
+  width: 158px;
+  overflow: hidden;
+}
 
-      </body>
-    </html>
-  </Content>
-</Module>
+#list {
+  width: 158px;
+}
+
+.namerow td {
+  border-top: 1px solid #ddd;
+  padding-top: 3px;
+}
+
+.name {
+  font-size: 80%;
+  font-weight: bold;
+  color: #333;
+  width: 135px;
+  overflow: hidden;
+  cursor: default;
+}
+
+.close {
+  text-decoration: none;
+  color: #666;
+  font-size: 14px;
+  margin-right: 4px;
+}
+
+.location {
+  cursor: default;
+  font-size: 71%;
+  padding-bottom: 3px;
+}
+
+.note {
+  font-size: 71%;
+  color: #666;
+  line-height: 1.3em;
+}
+
+.free {
+  color: #060;
+}
+
+.nopermission {
+  color: #666;
+  font-size: 11px;
+}
+
+</style>
+<script>
+
+/**
+ * The main data structure
+ * This is an array of objects.
+ * Each object has the following properties:
+ *   email (string) The email of the user
+ *   error (string) Optional. If set, indicates lack of
+ *          permissions to get data for the given email address.
+ *   events (array of objects). Optional. Each event entry has:
+ *      title (string) The event title
+ *      start {string} The start time (ical).
+ *      end {string) The end time (ical).
+ */
+var data = [];
+
+/**
+ * Indication how to format time fields
+ */
+var isTimeFormatMilitary = true;
+
+/**
+ * Returns the index of the data entry with the give email.
+ * Returns -1 if the email is not found.
+ */
+function findEmail(email) {
+  for (var i = 0; i < data.length; i++) {
+    if (data[i] && email == data[i].email) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+/**
+ * Generate the main table with the information about each person.
+ */
+function draw() {
+  var html = [];
+  var hasEntries = false;
+  html.push('<table width="100%" border="0" cellpadding="0" cellspacing="0">');
+  for (var i = 0; i < data.length; i++) {
+    if (data[i]) { // Ignore deleted entries
+      hasEntries = true;
+      var escapedEmail = gadgets.util.escapeString(data[i].email);
+      html.push('<tr class="namerow">');
+      html.push(
+          '<td><div class="name" title="',
+          escapedEmail,  // Use title as long names can get clipped
+          '">',
+          escapedEmail,
+          '</div></td>');
+      html.push(
+          '<td align="right"><a href="#" class="close" title="',
+          "__MSG_Remove__ ",
+          escapedEmail,
+          '" onclick="removeId(',
+          i,
+          ');return false;">&times;</a></td>');
+      html.push('</tr>');
+
+      // Show all events
+      var events = data[i].events;
+      for (var j = 0; events && j < events.length; j++) {
+        var text = formatEvent(events[j]);
+        html.push('<tr><td class="location" colspan="2">',
+            gadgets.util.escapeString(text),
+            '</td></tr>');
+      }
+
+      // Handle case of no events, could be an error or user is free
+      if (data[i].error || events.length == 0) {
+        html.push('<tr><td class="location" colspan="2">');
+        if (data[i].error) {
+          html.push("<span class='nopermission'>__MSG_NotAuthorized__</span>");
+        } else {
+          html.push("<span class='free'>__MSG_Free__</span>");
+        }
+        html.push('</td></tr>');
+      }
+    }
+  }
+  html.push('</table>');
+  document.getElementById('list').innerHTML = html.join('');
+  adjustHeight();
+}
+
+/**
+ * Removes a data entry with the specified index.
+ */
+function removeId(index) {
+  delete data[index];
+  draw();
+  setFormVisible(false);
+  savePrefs();
+}
+
+/**
+ * Sets the events for a given email.
+ * The events are an array of objects with event data.
+ */
+function set(email, events) {
+  var i = findEmail(email);
+  if (i < 0) {
+    i = data.length; // Add at the end if not found
+    data[i] = {email: email};
+  }
+  data[i].events = events;
+  draw();
+}
+
+/**
+ * Handles a click on the button to add a new person to the list.
+ */
+function addIds() {
+  var inputField = document.getElementById('uid');
+  // Trim spaces, lower case and split
+  var ids = inputField.value.toLowerCase().replace(/\s/g, '');
+  inputField.value = '';
+  addIdList(ids.split(','));
+
+  setFormVisible(false);
+  savePrefs();
+}
+
+/**
+ * Add a list (array) of email ids to load
+ */
+function addIdList(ids) {
+  var foundValidIds = false;
+  for (var i = 0; i < ids.length; i++) {
+    var id = ids[i];
+    if (id) {
+      foundValidIds = true;
+      set(id, [{title: "__MSG_Loading__"}]); // Set an intermediate status
+    }
+  }
+  draw();
+  if (foundValidIds) {
+    loadData();
+  }
+}
+
+/**
+ * Returns the number of user entries
+ */
+function getListSize() {
+  var cnt = 0;
+  for (var i = 0; i < data.length; i++) {
+    if (data[i]) {
+      cnt++;
+    }
+  }
+  return cnt;
+}
+
+/**
+ * Gadget's initialization
+ */
+function initGadget() {
+  google.calendar.getPreferences(handleCalendarPreferences);
+
+  // Start the refresher that sends a new data request every interval.
+  window.setInterval(loadData, 1000 * 60 * 5);
+
+  // Read settings email list
+  var prefs = new gadgets.Prefs();
+  var emails = prefs.getString('users');
+  addIdList(emails.split(','));
+  setFormVisible(false);
+}
+
+/**
+ * Send a request to Calendar to get data for all users.
+ */
+function loadData() {
+  var ids = [];
+  for (var i = 0; i < data.length; i++) {
+    if (data[i]) { // Ignore deleted entries
+      ids.push(data[i].email);
+    }
+  }
+  if (ids.length > 0) {
+    google.calendar.read.getEvents(calendarResponseCallback, ids);
+  }
+}
+
+/**
+ * Formats an event object and returns a formatted line to display.
+ * The event object has the following properties:
+ *   startTime - Object with properties year,month,date,hour,minute,second.
+ *   endTime - Object with properties year,month,date,hour,minute,second.
+ *   title - The event title text.
+ *   allDay - Boolean indicating an all-day event.
+ */
+function formatEvent(event) {
+  // TODO i18n
+  var title = event.title || "__MSG_Busy__";
+  if (event.allDay || !event.startTime) {
+    text = title;
+  } else {
+    text = formatTime(event.startTime) +
+           '&ndash;' +
+           formatTime(event.endTime) +
+           ' ' +
+           title;
+  }
+  return text;
+}
+
+/**
+ * Format the time as hh:mm
+ */
+function formatTime(time) {
+  var h = time.hour;
+  var m = time.minute;
+  if (isTimeFormatMilitary) {
+    return (h < 10 ? '0' : '') + h + ':' +
+        (m < 10 ? '0' : '') + m;
+  } else {
+    return (h > 12 ? h - 12 : h == 0 ? 12 : h) +
+        (m == 0 ? '' : ':' + (m < 10 ? '0' : '') + m) +
+        (h < 12 ? 'am' : 'pm');
+  }
+}
+
+/**
+ * Saves the gadget settings.
+ */
+function savePrefs() {
+  var allIds = [];
+  for (var i = 0; i < data.length; i++) {
+    if (data[i]) {
+      allIds.push(data[i].email);
+    }
+  }
+  var prefs = new gadgets.Prefs();
+  prefs.set('users', allIds.join(','));
+}
+
+/**
+ * A callback function that is called when the requested users
+ * locations are returned.
+ */
+function calendarResponseCallback(response) {
+  data = response;
+  draw()
+}
+
+/**
+ * Shows or hides the input form to add new people.
+ * Parameter force is used to force showing the form.
+ */
+function setFormVisible(force) {
+  var makeVisible = force || getListSize() == 0;
+  document.getElementById('form').style.display = makeVisible ? '' : 'none';
+  document.getElementById('openform').style.display = makeVisible ? 'none' : '';
+  if (force) {
+    document.getElementById('uid').focus();
+  }
+  adjustHeight();
+}
+
+/**
+ * Adjusts the height of the gadget
+ */
+function adjustHeight() {
+  var height = document.getElementById('gadget').offsetHeight;
+  gadgets.window.adjustHeight(height);
+}
+
+/**
+ * A callback called when calendar preferences are returned.
+ */
+function handleCalendarPreferences(prefs) {
+  isTimeFormatMilitary = prefs.military;
+}
+
+</script>
+</head>
+<body>
+<div id="gadget">
+  <div id="form">
+    <form onsubmit="addIds();return false;">
+      <input id="uid" type="text" />
+      <div class="note">__MSG_Note__</div>
+    </form>
+  </div>
+
+  <div id="openform">
+    <a href="#"
+       onclick="setFormVisible(true);return false">__MSG_Add__ &raquo;</a>
+  </div>
+
+  <div id="list"></div>
+</div>
+
+<script>
+initGadget();
+</script>
+
+  </Content></Module>
