@@ -11,16 +11,14 @@
 
       function eventCallback(response) {
         document.getElementById('content_div').innerHTML = response;
-        console.log(response);
+        console.log(response[0].name);
       }
 
       function test() {
-        alert('test');
         var startDate = {year: 2012, month: 12, date : 24, hour : 0, minute:0, second: 0};
         var endDate = {year: 2013, month: 1, date : 1, hour : 0, minute: 0, second: 0};
 
         google.calendar.read.getEvents(eventCallback, ["reedcwilson@gmail.com"], startDate, endDate);
-        google.calendar.showDate(2014, 12, 25);
       }
 
       </script>
