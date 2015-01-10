@@ -43,6 +43,10 @@
             // get a collection of tags and the time associated with the tags
             // { name0: float, name1: float }
 
+            console.log(response.length);
+            console.log(response[0].events.length);
+            console.log(response[1].events.length);
+
             var events = response[0].events;
             console.log(events.length);
             var tags = {};
@@ -67,7 +71,7 @@
             var startDate = {year: 2015, month: 1, date : 4, hour : 0, minute:0, second: 0};
             var endDate = {year: 2015, month: 1, date : 11, hour : 0, minute: 0, second: 0};
 
-            google.calendar.read.getEvents(eventCallback, ["selected"], startDate, endDate, {'requestedFields': ['owner', 'status', 'attendeeCount', 'details']});
+            google.calendar.read.getEvents(eventCallback, ['selected'], startDate, endDate, {'requestedFields': ['owner', 'status', 'attendeeCount', 'details']});
           }
 
         </script>
