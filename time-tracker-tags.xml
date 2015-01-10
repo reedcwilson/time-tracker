@@ -44,6 +44,7 @@
             // { name0: float, name1: float }
 
             console.log(response.length);
+            console.log(response[0].error);
             console.log(response[0].events.length);
             console.log(response[1].events.length);
 
