@@ -43,6 +43,7 @@
             for (event in response[0].events) {
               var tag = parseTag(event.details);
               var time = getTime(event.startTime, event.endTime);
+              console.log(tag + " " + time);
               if (!(tag in tags)) {
                 tags[tag] = time;
               } else {
@@ -50,6 +51,7 @@
               }
             }
 
+            console.log('tags: ' + Object.keys(tags).length);
             output = buildTable(tags);
             document.getElementById('content_div').innerHTML = output;
           }
