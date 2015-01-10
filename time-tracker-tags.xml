@@ -12,14 +12,40 @@
             doWork();
           }, false);
 
+          // parses the tag and time out of the details
+          var parseTag = function(details) {
+            var re = /tags:\s*(\S+)/i;
+            var arr = re.exec(details);
+            if (arr)
+              return arr[1];
+          }
+
           function eventCallback(response) {
             // get a collection of tags and the time associated with the tags
-            // { name: "name", time: "float" }
+            // { name: "name", time: "float" 
+
+            var tags = [];
+            for (event in response[0].events) {
+              var tag = parseTag(event.details);
+              var time = getTime(event.startTime, event.endTime);
+              if (!(tag in tags)) {
+                tags.push({ 'tag': tag, 'time': time });
+              } else {
+                tags[tag] += tag.time;
+              }
+            }
+
+            var output = '<table><tbody>';
+            for (tag in tags) {
+              output += '<tr>';
+              output += '</tr>';
+            }
+            output += '</tbody></table>';
 
             console.log("keys");
             for (key in response[0].events[0])
             {
-                console.log(key);
+              console.log(key);
             }
             console.log("done");
             console.log("response.length " + response.length);
@@ -30,13 +56,18 @@
             console.log("response.events[0].allDay " + response[0].events[0].allDay);
             console.log("response.events[0].id " + response[0].events[0].id);
             console.log("response.events[0].details " + response[0].events[0].details);
+            console.log("response.events[0].details " + response[0].events[0].startTime);
+            console.log("response.events[0].details " + response[0].events[0].endTime);
+            console.log("response.events[0].details " + google.calendar.utils.toDate(response[0].events[0].startTime));
+            console.log("response.events[0].details " + google.calendar.utils.toDate(response[0].events[0].endTime));
 
             document.getElementById('content_div').innerHTML = response;
           }
 
           function doWork() {
-            var startDate = {year: 2015, month: 1, date : 9, hour : 0, minute:0, second: 0};
-            var endDate = {year: 2015, month: 1, date : 10, hour : 0, minute: 0, second: 0};
+            // get current week
+            var startDate = {year: 2015, month: 1, date : 4, hour : 0, minute:0, second: 0};
+            var endDate = {year: 2015, month: 1, date : 11, hour : 0, minute: 0, second: 0};
 
             google.calendar.read.getEvents(eventCallback, ["reedcwilson@gmail.com"], startDate, endDate, {'requestedFields': ['owner', 'status', 'attendeeCount', 'details']});
           }
