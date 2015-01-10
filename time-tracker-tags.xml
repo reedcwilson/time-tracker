@@ -13,6 +13,7 @@
           }, false);
 
           var getTime = function(start, end) {
+            return (end - start) / 1000 / 60 / 60;
           }
 
           // parses the tag and time out of the details
@@ -25,7 +26,7 @@
 
           function eventCallback(response) {
             // get a collection of tags and the time associated with the tags
-            // { name: "name", time: "float" 
+            // { name: "name", time: "float" }
 
             var tags = [];
             for (event in response[0].events) {
@@ -40,8 +41,7 @@
 
             var output = '<table><tbody>';
             for (tag in tags) {
-              output += '<tr>';
-              output += '</tr>';
+              output += '<tr><td>' + tag.tag + </td><td>tag.time</td></tr>';
             }
             output += '</tbody></table>';
 
@@ -64,7 +64,7 @@
             console.log("response.events[0].details " + google.calendar.utils.toDate(response[0].events[0].startTime));
             console.log("response.events[0].details " + google.calendar.utils.toDate(response[0].events[0].endTime));
 
-            document.getElementById('content_div').innerHTML = response;
+            document.getElementById('content_div').innerHTML = output;
           }
 
           function doWork() {
