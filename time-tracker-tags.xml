@@ -39,27 +39,25 @@
             return new Date(date.year, date.month, date.date, date.hour, date.minute, date.second);
           }
 
-          function eventCallback(response) {
+          function eventCallback(cals) {
             // get a collection of tags and the time associated with the tags
             // { name0: float, name1: float }
 
-            console.log(response.length);
-            console.log(response[0].error);
-            console.log(response[0].events.length);
-            console.log(response[1].events.length);
-
-            var events = response[0].events;
-            console.log(events.length);
+            console.log(cals.length);
             var tags = {};
-            for (event in events) {
-              console.log('event details: ' + events[event].details);
-              var tag = parseTag(events[event].details);
-              var time = getTime(convertDate(events[event].startTime), convertDate(events[event].endTime));
-              console.log(tag + " " + time);
-              if (!(tag in tags)) {
-                tags[tag] = time;
-              } else {
-                tags[tag] += time;
+            for (cal in cals) {
+              var events = cals[cal].events;
+              console.log(events.length);
+              for (event in events) {
+                console.log('event details: ' + events[event].details);
+                var tag = parseTag(events[event].details);
+                var time = getTime(convertDate(events[event].startTime), convertDate(events[event].endTime));
+                console.log(tag + " " + time);
+                if (!(tag in tags)) {
+                  tags[tag] = time;
+                } else {
+                  tags[tag] += time;
+                }
               }
             }
 
