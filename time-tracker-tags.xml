@@ -44,18 +44,12 @@
             // get a collection of tags and the time associated with the tags
             // { name0: float, name1: float }
 
-            console.log(response[0].events[0].details);
-
+            var events = response[0].events;
             var tags = {};
-            for (event in response[0].events) {
-              console.log('event: ' + event);
-              console.log('keys');
-              for (key in event) {
-                console.log(key);
-              }
-              console.log('event details: ' + event.details);
-              var tag = parseTag(event.details);
-              var time = getTime(convertDate(event.startTime), convertDate(event.endTime));
+            for (event in events) {
+              console.log('event details: ' + events[event].details);
+              var tag = parseTag([events]event.details);
+              var time = getTime(convertDate([events]event.startTime), convertDate([events]event.endTime));
               console.log(tag + " " + time);
               if (!(tag in tags)) {
                 tags[tag] = time;
@@ -64,7 +58,6 @@
               }
             }
 
-            console.log('tags: ' + Object.keys(tags).length);
             output = buildTable(tags);
             document.getElementById('content_div').innerHTML = output;
           }
