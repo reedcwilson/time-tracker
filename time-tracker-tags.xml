@@ -44,6 +44,7 @@
             // { name0: float, name1: float }
 
             var events = response[0].events;
+            console.log(events.length);
             var tags = {};
             for (event in events) {
               console.log('event details: ' + events[event].details);
