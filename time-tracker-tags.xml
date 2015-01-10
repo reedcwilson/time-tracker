@@ -37,7 +37,7 @@
           }
 
           var convertDate = function(date) {
-            return new Date(google.calendar.utils.toDate(date));
+            return new Date(date.year, date.month, date.date, date.hour, date.minute. date.second);
           }
 
           function eventCallback(response) {
