@@ -19,6 +19,7 @@
 
           // parses the tag and time out of the details
           var parseTag = function(details) {
+            console.log('details: ' + details);
             var re = /tags:\s*(\S+)/i;
             var arr = re.exec(details);
             if (arr)
@@ -35,6 +36,10 @@
             return output;
           }
 
+          var convertDate = function(date) {
+            return google.calendar.utils.toDate(date);
+          }
+
           function eventCallback(response) {
             // get a collection of tags and the time associated with the tags
             // { name: "name", time: "float" }
@@ -43,7 +48,7 @@
             console.log('events: ' + response[0].events.length);
             for (event in response[0].events) {
               var tag = parseTag(event.details);
-              var time = getTime(event.startTime, event.endTime);
+              var time = getTime(convertDate(event.startTime), convertDate(event.endTime));
               console.log(tag + " " + time);
               if (!(tag in tags)) {
                 tags[tag] = time;
