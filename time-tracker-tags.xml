@@ -37,8 +37,7 @@
           }
 
           var convertDate = function(date) {
-          //return google.calendar.utils.toDate(date);
-            return 5100000;
+            return new Date(google.calendar.utils.toDate(date));
           }
 
           function eventCallback(response) {
@@ -48,8 +47,9 @@
             console.log(response[0].events[0].details);
 
             var tags = {};
-            console.log('keys');
             for (event in response[0].events) {
+              console.log('event: ' + event);
+              console.log('keys');
               for (key in event) {
                 console.log(key);
               }
