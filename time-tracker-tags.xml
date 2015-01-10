@@ -45,6 +45,8 @@
             // get a collection of tags and the time associated with the tags
             // { name0: float, name1: float }
 
+            console.log(response[0].events[0].details);
+
             var tags = {};
             console.log('events: ' + response[0].events.length);
             for (event in response[0].events) {
