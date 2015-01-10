@@ -37,7 +37,8 @@
           }
 
           var convertDate = function(date) {
-            return google.calendar.utils.toDate(date);
+          //return google.calendar.utils.toDate(date);
+            return 5100000;
           }
 
           function eventCallback(response) {
