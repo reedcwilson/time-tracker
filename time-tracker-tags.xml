@@ -70,7 +70,7 @@
             var startDate = {year: 2015, month: 1, date : 4, hour : 0, minute:0, second: 0};
             var endDate = {year: 2015, month: 1, date : 11, hour : 0, minute: 0, second: 0};
 
-            google.calendar.read.getEvents(eventCallback, '@viewer', startDate, endDate, {'requestedFields': ['owner', 'status', 'attendeeCount', 'details']});
+            google.calendar.read.getEvents(eventCallback, 'selected', startDate, endDate, {'requestedFields': ['owner', 'status', 'attendeeCount', 'details']});
           }
 
         </script>
