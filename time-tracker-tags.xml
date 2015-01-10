@@ -48,8 +48,8 @@
             var tags = {};
             for (event in events) {
               console.log('event details: ' + events[event].details);
-              var tag = parseTag([events]event.details);
-              var time = getTime(convertDate([events]event.startTime), convertDate([events]event.endTime));
+              var tag = parseTag(events[event].details);
+              var time = getTime(convertDate(events[event].startTime), convertDate(events[event].endTime));
               console.log(tag + " " + time);
               if (!(tag in tags)) {
                 tags[tag] = time;
