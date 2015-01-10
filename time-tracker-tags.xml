@@ -12,6 +12,9 @@
             doWork();
           }, false);
 
+          var getTime = function(start, end) {
+          }
+
           // parses the tag and time out of the details
           var parseTag = function(details) {
             var re = /tags:\s*(\S+)/i;
