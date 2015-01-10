@@ -48,8 +48,12 @@
             console.log(response[0].events[0].details);
 
             var tags = {};
-            console.log('events: ' + response[0].events.length);
+            console.log('keys');
             for (event in response[0].events) {
+              for (key in event) {
+                console.log(key);
+              }
+              console.log('event details: ' + event.details);
               var tag = parseTag(event.details);
               var time = getTime(convertDate(event.startTime), convertDate(event.endTime));
               console.log(tag + " " + time);
