@@ -19,7 +19,6 @@
 
           // parses the tag and time out of the details
           var parseTag = function(details) {
-            console.log('details: ' + details);
             var re = /tags:\s*(\S+)/i;
             var arr = re.exec(details);
             if (arr)
@@ -37,7 +36,7 @@
           }
 
           var convertDate = function(date) {
-            return new Date(date.year, date.month, date.date, date.hour, date.minute. date.second);
+            return new Date(date.year, date.month, date.date, date.hour, date.minute, date.second);
           }
 
           function eventCallback(response) {
