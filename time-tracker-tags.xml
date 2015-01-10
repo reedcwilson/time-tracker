@@ -40,6 +40,7 @@
             // { name: "name", time: "float" }
 
             var tags = {};
+            console.log('events: ' + response[0].events.length);
             for (event in response[0].events) {
               var tag = parseTag(event.details);
               var time = getTime(event.startTime, event.endTime);
