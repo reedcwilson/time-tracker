@@ -74,17 +74,17 @@
           //}
 
           gadgets.util.registerOnLoadHandler(function() {
-            function doWork(date) {
-              date && google.calendar.read.getEvents(eventCallback, 'selected', date.startTime, date.endTime, {
+            function doWork() {
+              console.log('doing work');
+              dates && google.calendar.read.getEvents(eventCallback, 'selected', dates.startTime, dates.endTime, {
                 'requestedFields': ['details']
               });
             }
             var date;
             google.calendar.subscribeToDates(function(d) {
               console.log(d.startTime.date + ' ' + d.endTime.date);
-              date = d;
-              date.endTime.date++;
-              //visibleDatesJs = rangeToJs(b);
+              dates = d;
+              dates.endTime.date++;
               doWork()
             });
             google.calendar.subscribeToDataChange(doWork)
