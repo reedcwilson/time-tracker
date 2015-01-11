@@ -78,9 +78,6 @@
               date && google.calendar.read.getEvents(eventCallback, 'selected', date.startTime, date.endTime, {
                 'requestedFields': ['details']
               });
-              //b && google.calendar.read.getEvents(eventsCallback, "selected", b.startTime, b.endTime, {
-              //  requestedFields: ["details"]
-              //})
             }
             var date;
             google.calendar.subscribeToDates(function(d) {
@@ -88,7 +85,7 @@
               date = d;
               date.endTime.date++;
               //visibleDatesJs = rangeToJs(b);
-              a()
+              doWork()
             });
             google.calendar.subscribeToDataChange(doWork)
           });
