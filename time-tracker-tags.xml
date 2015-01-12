@@ -8,14 +8,11 @@
     <![CDATA[
       <html>
         <script type="text/javascript">
-          //window.addEventListener("DOMContentLoaded", function() {
-          //  doWork();
-          //}, false);
 
           // finds the hours for a given event
           var getTime = function(start, end) {
             return (end - start) / 1000 / 60 / 60;
-          }
+          };
 
           // parses the tag and time out of the details
           var parseTag = function(details) {
@@ -23,36 +20,43 @@
             var arr = re.exec(details);
             if (arr)
               return arr[1];
-          }
+          };
+
+          // totals the tags
+          var getTotal = function(tags) {
+            var total = 0;
+            for (tag in tags) {
+              total += tags[tag]
+            }
+            return total;
+          };
 
           // builds the html table that will display the data
-          var buildTable = function(tags) {
+          var buildTable = function(tags, total) {
             var output = '<table><tbody>';
             for (tag in tags) {
-              output += '<tr><td>' + tag + '</td><td>' + tags[tag] + '</td></tr>';
+              output += '<tr><td>' + tag + '</td><td>' + tags[tag]  + '</td><td>' + Math.floor(total / tags[tag]) + '</td></tr>';
             }
             output += '</tbody></table>';
             return output;
-          }
+          };
 
+          // converts a Google date to a JS date
           var convertDate = function(date) {
             return new Date(date.year, date.month, date.date, date.hour, date.minute, date.second);
-          }
+          };
 
+          // does the work of counting hours
           function eventCallback(cals) {
             // get a collection of tags and the time associated with the tags
             // { name0: float, name1: float }
 
-            console.log(cals.length);
             var tags = {};
             for (cal in cals) {
               var events = cals[cal].events;
-              console.log(events.length);
               for (event in events) {
-                console.log('event details: ' + events[event].details);
                 var tag = parseTag(events[event].details);
                 var time = getTime(convertDate(events[event].startTime), convertDate(events[event].endTime));
-                console.log(tag + " " + time);
                 if (!(tag in tags)) {
                   tags[tag] = time;
                 } else {
@@ -61,28 +65,24 @@
               }
             }
 
-            output = buildTable(tags);
+            output = buildTable(tags, getTotal(tags));
             document.getElementById('content_div').innerHTML = output;
-          }
+          };
 
-          //function doWork() {
-          //  // get current week
-          //  var startDate = {year: 2015, month: 1, date : 4, hour : 0, minute:0, second: 0};
-          //  var endDate = {year: 2015, month: 1, date : 11, hour : 0, minute: 0, second: 0};
-
-          //  google.calendar.read.getEvents(eventCallback, 'selected', startDate, endDate, {'requestedFields': ['owner', 'status', 'attendeeCount', 'details']});
-          //}
-
+          // do stuff when the gadget loads
           gadgets.util.registerOnLoadHandler(function() {
+
+            // get the events
             function doWork() {
               console.log('doing work');
               dates && google.calendar.read.getEvents(eventCallback, 'selected', dates.startTime, dates.endTime, {
                 'requestedFields': ['details']
               });
             }
+
+            // get the currently viewable dates
             var date;
             google.calendar.subscribeToDates(function(d) {
-              console.log(d.startTime.date + ' ' + d.endTime.date);
               dates = d;
               dates.endTime.date++;
               doWork()
