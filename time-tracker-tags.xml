@@ -47,10 +47,11 @@
             return total;
           };
 
-          // builds the html table that will display the data
-          var buildTable = function(t, total) {
+          // turns the dictionary into a list of sorted objects
+          var getTagsList = function(t) {
             var tags = [];
             for (tag in t) {
+              console.log('tag: ' + tag + ' ' + t[tag]);
               tags.push({
                 tag: tag,
                 count: t[tag]
@@ -59,6 +60,12 @@
             tags.sort(function(first, second) {
               return second.count - first.count
             });
+            return tags;
+          };
+
+          // builds the html table that will display the data
+          var buildTable = function(t, total) {
+            var tags = getTagsList(t);
             var output = '<table><tbody>';
             output += '<tr><th>Tag</th><th>Hours</th><th>%</th></tr>';
             for (tag in tags) {
@@ -103,7 +110,6 @@
 
             // get the events
             function doWork() {
-              console.log('doing work');
               dates && google.calendar.read.getEvents(eventCallback, 'selected', dates.startTime, dates.endTime, {
                 'requestedFields': ['details']
               });
