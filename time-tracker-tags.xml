@@ -24,6 +24,10 @@
           .danger {
             color: red;
           }
+
+          .tag {
+            text-align: left;
+          }
         </style>
         <script type="text/javascript">
 
@@ -70,7 +74,7 @@
           var buildTable = function(t, total) {
             var tags = getTagsList(t);
             var output = '<table><tbody>';
-            output += '<tr><th>Tag</th><th>Hours</th><th>%</th></tr>';
+            output += '<tr><th class="tag">Tag</th><th class="nums">Hours</th><th class="nums">%</th></tr>';
             for (tag in tags) {
               if (tags[tag].tag == 'untagged') {
                 output += '<tr class="danger">';
@@ -78,7 +82,7 @@
               else {
                 output += '<tr>';
               }
-              output += '<td>' + tags[tag].tag + '</td><td class="nums">' + tags[tag].count  + '</td><td class="nums">' + Math.floor((tags[tag].count / total) * 100) + '</td></tr>';
+              output += '<td class="tag">' + tags[tag].tag + '</td><td class="nums">' + tags[tag].count  + '</td><td class="nums">' + Math.floor((tags[tag].count / total) * 100) + '%</td></tr>';
             }
             output += '</tbody></table>';
             return output;
