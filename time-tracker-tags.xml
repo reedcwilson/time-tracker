@@ -73,10 +73,10 @@
             output += '<tr><th>Tag</th><th>Hours</th><th>%</th></tr>';
             for (tag in tags) {
               if (tags[tag].tag == 'untagged') {
-                output += '<tr class='danger'>;
+                output += '<tr class="danger">';
               }
               else {
-                output += <tr>;
+                output += '<tr>';
               }
               output += '<td>' + tags[tag].tag + '</td><td class="nums">' + tags[tag].count  + '</td><td class="nums">' + Math.floor((tags[tag].count / total) * 100) + '</td></tr>';
             }
