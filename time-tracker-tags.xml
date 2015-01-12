@@ -51,7 +51,6 @@
           var getTagsList = function(t) {
             var tags = [];
             for (tag in t) {
-              console.log('tag: ' + tag + ' ' + t[tag]);
               tags.push({
                 tag: tag,
                 count: t[tag]
@@ -69,7 +68,9 @@
             var output = '<table><tbody>';
             output += '<tr><th>Tag</th><th>Hours</th><th>%</th></tr>';
             for (tag in tags) {
-              output += '<tr><td>' + tag.tag + '</td><td class="nums">' + tags.count  + '</td><td class="nums">' + Math.floor((tags.count / total) * 100) + '</td></tr>';
+              console.log(tag);
+              console.log(tags[tag] + '\n');
+              output += '<tr><td>' + tag.tag + '</td><td class="nums">' + tag.count  + '</td><td class="nums">' + Math.floor((tag.count / total) * 100) + '</td></tr>';
             }
             output += '</tbody></table>';
             return output;
