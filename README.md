@@ -1,4 +1,4 @@
-# time-tracker-tags
+# time-tracker
 
 Uses tags in the description of Google Calendar events to track hours spent.
 
