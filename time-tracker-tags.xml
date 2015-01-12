@@ -60,9 +60,9 @@
               return second.count - first.count
             });
             var output = '<table><tbody>';
-                output += '<tr><th>Tag</th><th>Hours</th><th>%</th></tr>';
+            output += '<tr><th>Tag</th><th>Hours</th><th>%</th></tr>';
             for (tag in tags) {
-              output += '<tr><td>' + tag + '</td><td class='nums'>' + tags[tag]  + '</td><td class='nums'>' + Math.floor((tags[tag] / total) * 100) + '</td></tr>';
+              output += '<tr><td>' + tag + '</td><td class="nums">' + tags[tag]  + '</td><td class="nums">' + Math.floor((tags[tag] / total) * 100) + '</td></tr>';
             }
             output += '</tbody></table>';
             return output;
