@@ -7,6 +7,20 @@
   <Content type="html">
     <![CDATA[
       <html>
+        <style>
+          th, td {
+            padding-right: 5px;
+          }
+
+          table {
+            width: 100%;
+            font-size: smaller;
+          }
+
+          .nums {
+            align: right;
+          }
+        </style>
         <script type="text/javascript">
 
           // finds the hours for a given event
@@ -20,6 +34,8 @@
             var arr = re.exec(details);
             if (arr)
               return arr[1];
+            else
+              return 'untagged';
           };
 
           // totals the tags
@@ -32,10 +48,21 @@
           };
 
           // builds the html table that will display the data
-          var buildTable = function(tags, total) {
+          var buildTable = function(t, total) {
+            var tags = [];
+            for (tag in t) {
+              tags.push({
+                tag: tag,
+                count: t[tag]
+              });
+            }
+            tags.sort(function(first, second) {
+              return second.count - first.count
+            });
             var output = '<table><tbody>';
+                output += '<tr><th>Tag</th><th>Hours</th><th>%</th></tr>';
             for (tag in tags) {
-              output += '<tr><td>' + tag + '</td><td>' + tags[tag]  + '</td><td>' + Math.floor(total / tags[tag]) + '</td></tr>';
+              output += '<tr><td>' + tag + '</td><td class='nums'>' + tags[tag]  + '</td><td class='nums'>' + Math.floor((tags[tag] / total) * 100) + '</td></tr>';
             }
             output += '</tbody></table>';
             return output;
@@ -55,12 +82,14 @@
             for (cal in cals) {
               var events = cals[cal].events;
               for (event in events) {
-                var tag = parseTag(events[event].details);
-                var time = getTime(convertDate(events[event].startTime), convertDate(events[event].endTime));
-                if (!(tag in tags)) {
-                  tags[tag] = time;
-                } else {
-                  tags[tag] += time;
+                if (!events[event].allDay) {
+                  var tag = parseTag(events[event].details);
+                  var time = getTime(convertDate(events[event].startTime), convertDate(events[event].endTime));
+                  if (!(tag in tags)) {
+                    tags[tag] = time;
+                  } else {
+                    tags[tag] += time;
+                  }
                 }
               }
             }
